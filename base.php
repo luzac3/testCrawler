@@ -162,6 +162,7 @@ class Crawler{
 // インスタンス
 
 
+
 $link_list = new Crawler($url,$search_str);
 
 print_r($link_list);
