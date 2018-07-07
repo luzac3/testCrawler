@@ -78,16 +78,7 @@ class CLI{
 
             if(!$link){continue;}
 
-            $format = $this->checkFormat($link);
             $info = $this->getUrlInfo($link);
-
-            // ファイルの場合は、再帰処理を行わない[1:ymd , 2:url , 3:pdf]
-            if($format){
-                $line = $date.",".$url.",".$this->checkTagImg($href[4][$i],$page_url_info).",".$link.",";
-                file_put_contents($this->data_path.$info['domain'], $line."\n", FILE_APPEND);
-                echo $line."\n";
-                continue;
-            }
 
             // すでに登録済みのURLは処理を行わない
             unset($res);
@@ -240,31 +231,6 @@ class CLI{
         }
         else{
             return $this->setUrl($url,$page_url_info);
-        }
-    }
-
-    // リンク先がファイルかどうかを確認する
-    function checkFormat($url){
-        if(preg_match("@\.pdf$@i",$url)){
-            return "pdf";
-        }
-        else if(preg_match("@\.gif$@i",$url)){
-            return "gif";
-        }
-        else if(preg_match("@\.[jpg|jpeg]$@i",$url)){
-            return "jpg";
-        }
-        else if(preg_match("@\.png$@i",$url)){
-            return "png";
-        }
-        else if(preg_match("@\.avi$@i",$url)){
-            return "avi";
-        }
-        else if(preg_match("@\.mp3$@i",$url)){
-            return "mp3";
-        }
-        else if(preg_match("@\.bmp$@i",$url)){
-            return "bmp";
         }
     }
 
