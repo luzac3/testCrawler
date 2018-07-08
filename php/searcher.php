@@ -1,4 +1,16 @@
 <?php
+echo <<< EOM
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="content-style-type" content="text/css">
+<link rel="stylesheet" href="/testCrawler/css/base.css" type="text/css" media="screen">
+<script type="text/javascript" src="/testCrawler/javascript/entrance.js"></script>
+</head>
+<body>
+EOM;
+
 if(!empty($_GET["url"]) && !empty($_GET["search_str"])){
     // $url = "https://wolfnet-twei.sakura.ne.jp/party/html/register.html";
 
@@ -14,11 +26,11 @@ if(!empty($_GET["url"]) && !empty($_GET["search_str"])){
     $url_property = $crawler->crawler(0);
 
     if($url_property == "no_match"){
-        echo "一致する文字が見つかりません";
+        echo "<p>一致する文字が見つかりません</p>";
     }else{
         $traced_url_str = "";
         foreach($url_property->get_traced_url() as $traced_url){
-            $traced_url_str .= $traced_url . "\n→";
+            $traced_url_str .= "\n<p>" . $traced_url . "</p>→";
         }
         // 末尾の/を削除
         $traced_url_str = rtrim($traced_url_str, "→");
@@ -278,7 +290,11 @@ if(!empty($_GET["url"]) && !empty($_GET["search_str"])){
         }
     }
 }else{
-    echo "URLと文字列を指定してください";
+    echo "<p>URLと文字列を指定してください</p>";
 }
-
+echo <<< EOM
+<p><a href="/testCrawler/html/entrance.html">戻る</a>
+</body>
+</html>
+EOM;
 ?>
