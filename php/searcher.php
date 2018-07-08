@@ -6,6 +6,7 @@ echo <<< EOM
 <meta charset="UTF-8">
 <meta http-equiv="content-style-type" content="text/css">
 <link rel="stylesheet" href="/crawler/css/base.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/crawler/css/searcher.css" type="text/css" media="screen">
 <script type="text/javascript" src="/crawler/javascript/entrance.js"></script>
 </head>
 <body>
@@ -321,10 +322,10 @@ if(!empty($_GET["url"]) && !empty($_GET["search_str"])){
     }else{
         $traced_url_str = "<p>[結果]</p>";
         foreach($url_property->get_traced_url() as $traced_url){
-            $traced_url_str .= "\n<p>" . $traced_url . "</p>→";
+            $traced_url_str .= "\n<p>" . $traced_url . "</p>↓";
         }
         // 末尾の/を削除
-        $traced_url_str = rtrim($traced_url_str, "→");
+        $traced_url_str = rtrim($traced_url_str, "↓");
 
         echo $traced_url_str;
     }
@@ -332,7 +333,7 @@ if(!empty($_GET["url"]) && !empty($_GET["search_str"])){
     echo "<p>URLと文字列を指定してください</p>";
 }
 echo <<< EOM
-<p><a href="/crawler/html/entrance.html">戻る</a>
+<p><a href="/crawler/html/entrance.html">戻る</a></p>
 </body>
 </html>
 EOM;
