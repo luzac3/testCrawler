@@ -37,7 +37,7 @@ if(!empty($_GET["url"]) && !empty($_GET["search_str"])){
         private $search_level = 0;
 
         // リンク取得用正規表現のパターン
-        private $pattern_link = "@(<a [^>]*?href|location\.href|<script [^>]*?src) *?= *?['|\"]( *[^#].*?)['|\"].*?(>.*?[</a>|</script>]|;)@si";
+        private $pattern_link = "@(<a [^>]*?href|location\.href|<script [^>]*?src *?=|Location:) *?['|\"]( *[^#].*?)['|\"].*?(>.*?[</a>|</script>]|;)@si";
 
         /**
          *
@@ -82,7 +82,7 @@ if(!empty($_GET["url"]) && !empty($_GET["search_str"])){
                 $source = @file_get_contents($url);
 
                 // 正常に取得できなかったらスキップ
-                if(!strpos($http_response_header[0], "200")){
+                if(!$source){
                     continue;
                 }
 
@@ -142,7 +142,7 @@ if(!empty($_GET["url"]) && !empty($_GET["search_str"])){
             // 受け取ったリンクをループしてURLのリストを抽出
             foreach($link_list as $index => $link){
                 // 変換のためリンクを分割
-                $ex_url = explode("/",$link[2]);
+                $ex_url = explode("/",$link[3]);
 
                 // ファイルがGETを前提にしている場合(?を含む場合)、その部分を削除する
                 // 最後のファイル名のインデックスを取得
@@ -182,7 +182,7 @@ if(!empty($_GET["url"]) && !empty($_GET["search_str"])){
                 $url = "";
 
                 // 変換なし
-                if(preg_match("@^http@",$link[2])){
+                if(preg_match("@^http@",$link[3])){
                     // ドメインが違う場合はスキップ
                     if($ex_url[2] != $this->domain){
                         continue;
@@ -195,21 +195,21 @@ if(!empty($_GET["url"]) && !empty($_GET["search_str"])){
                 if($ex_url[0] == ""){
                     // 基点のURLからhtml/htmlsを解析
                     $ex_url_master = explode("/",$this->url_property_list[0][0]->get_url());
-                    $url = $ex_url_master[0] . "//" . $this ->domain . $link[2];
+                    $url = $ex_url_master[0] . "//" . $this ->domain . $link[3];
                 }
 
                 // 相対パスを変換
-                if($url == "" && preg_match("@^\.?@",$link[2])){
+                if($url == "" && preg_match("@^\.?@",$link[3])){
                     // 現在のディレクトリ位置のインデックスを取得
                     $ex_now_len = count($ex_now_url) - 2;
 
                     // ./の場合
-                    //if(preg_match("@^\./@",$link[2])){
+                    //if(preg_match("@^\./@",$link[3])){
                         //$ex_url[0] = $ex_now_url[$ex_now_len];
                     //}
 
                     // ../の場合
-                    if(preg_match("@^\.\./@",$link[2])){
+                    if(preg_match("@^\.\./@",$link[3])){
                         foreach($ex_url as $index => $directory){
                             if($ex_url[$index] == ".."){
                                 // $ex_url[$i] = $ex_now_url[$ex_now_len--];
