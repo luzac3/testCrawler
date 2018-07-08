@@ -5,8 +5,8 @@ echo <<< EOM
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="content-style-type" content="text/css">
-<link rel="stylesheet" href="/testCrawler/css/base.css" type="text/css" media="screen">
-<script type="text/javascript" src="/testCrawler/javascript/entrance.js"></script>
+<link rel="stylesheet" href="/crawler/css/base.css" type="text/css" media="screen">
+<script type="text/javascript" src="/crawler/javascript/entrance.js"></script>
 </head>
 <body>
 EOM;
@@ -332,7 +332,7 @@ if(!empty($_GET["url"]) && !empty($_GET["search_str"])){
     echo "<p>URLと文字列を指定してください</p>";
 }
 echo <<< EOM
-<p><a href="/testCrawler/html/entrance.html">戻る</a>
+<p><a href="/crawler/html/entrance.html">戻る</a>
 </body>
 </html>
 EOM;

@@ -8,6 +8,6 @@ window.onload = function(){
         const search_str = document.getElementById("search_str").value;
 
         // 検索ページに遷移
-        location.href = "/testCrawler/php/searcher.php?url=" + url + "&search_str=" + search_str;
+        location.href = "/crawler/php/searcher.php?url=" + url + "&search_str=" + search_str;
     }, false);
 }
