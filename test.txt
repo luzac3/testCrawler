@@ -1,4 +1,0 @@
-
-    // private $pattern_link = "@<(a [^>]*?href)|(location\.href) *?= *?['|\"]( *[^#].*?)['|\"].*?>.*?</a>@si";
-
-private $pattern_link = "@<a [^>]*?href *?= *?['|\"]( *[^#].*?)['|\"].*?>.*?</a>@si";
