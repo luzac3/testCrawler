@@ -322,7 +322,7 @@ if(!empty($_GET["url"]) && !empty($_GET["search_str"])){
                 $traced_url_str .= "\n<p>" . $traced_url . "</p>\n<p>↓</p>";
             }
         }
-//
+
         echo $traced_url_str;
     }
 }else{
