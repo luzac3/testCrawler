@@ -161,19 +161,9 @@ if(!empty($_GET["url"]) && !empty($_GET["search_str"])){
                 $now_url_arr_len = count($now_url_arr);
 
                 if($now_url_arr[$now_url_arr_len-1] == "s" && $now_url_arr[$now_url_arr_len-2] == "j" && $now_url_arr[$now_url_arr_len-3] == "."){
-                    // リンクをさかのぼってJSファイル以外が見つかるまで続ける
-                    foreach($traced_url as $traced_url_val){
-                        // たどったリンクを配列に変換
-                        $traced_url_val_arr = str_split($traced_url_val);
+                    // 親ファイル(JS呼び出し元ファイル)取得、現URLとして設定
+                    $now_url = $traced_url[count($traced_url) - 2];
 
-                        // たどったリンクの長さを取得
-                        $traced_url_val_arr_len = count($traced_url_val_arr);
-                        if($traced_url_val_arr[$traced_url_val_arr_len-1] != "s" || $traced_url_val_arr[$traced_url_val_arr_len-2] != "j" || $traced_url_val_arr[$traced_url_val_arr_len-3] != "."){
-                            // 親ファイル(JS呼び出し元ファイル)取得、現URLとして設定
-                            $now_url = $traced_url_val;
-                            break;
-                        }
-                    }
                 }
 
                 // 現URLを分割
@@ -321,12 +311,18 @@ if(!empty($_GET["url"]) && !empty($_GET["search_str"])){
         echo "<p>一致する文字が見つかりません</p>";
     }else{
         $traced_url_str = "<p>[結果]</p>";
-        foreach($url_property->get_traced_url() as $traced_url){
-            $traced_url_str .= "\n<p>" . $traced_url . "</p>↓";
-        }
-        // 末尾の/を削除
-        $traced_url_str = rtrim($traced_url_str, "↓");
 
+        // 最終行を設定
+        $last = count($url_property->get_traced_url());
+        $num = 0;
+        foreach($url_property->get_traced_url() as $traced_url){
+            if(++$num == $last){
+                $traced_url_str .= "\n<p>" . $traced_url . "</p>";
+            }else{
+                $traced_url_str .= "\n<p>" . $traced_url . "</p>\n<p>↓</p>";
+            }
+        }
+//
         echo $traced_url_str;
     }
 }else{
